@@ -34,7 +34,7 @@ describe('SingUp Controller', () => {
       body: {
         email: 'any_email@email.com',
         password: 'any_password',
-        passwordConfimation: 'any_password'
+        passwordConfirmation: 'any_password'
       }
     }
     const httpReponse = sut.handle(httpRequest)
@@ -48,7 +48,7 @@ describe('SingUp Controller', () => {
       body: {
         name: 'any_name',
         password: 'any_password',
-        passwordConfimation: 'any_password'
+        passwordConfirmation: 'any_password'
       }
     }
     const httpReponse = sut.handle(httpRequest)
@@ -62,7 +62,7 @@ describe('SingUp Controller', () => {
       body: {
         name: 'any_name',
         email: 'any_mail@mail.com',
-        passwordConfimation: 'any_password'
+        passwordConfirmation: 'any_password'
       }
     }
     const httpReponse = sut.handle(httpRequest)
@@ -81,7 +81,22 @@ describe('SingUp Controller', () => {
     }
     const httpReponse = sut.handle(httpRequest)
     expect(httpReponse.statusCode).toBe(400)
-    expect(httpReponse.body).toEqual(new MissingParamError('passwordConfimation'))
+    expect(httpReponse.body).toEqual(new MissingParamError('passwordConfirmation'))
+  })
+
+  test('Schould return 400 if passwor confirmation fails', () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        email: 'any_mail@mail.com',
+        password: 'any_password',
+        passwordConfirmation: 'invalid_password'
+      }
+    }
+    const httpReponse = sut.handle(httpRequest)
+    expect(httpReponse.statusCode).toBe(400)
+    expect(httpReponse.body).toEqual(new InvalidParamError('passwordConfirmation'))
   })
 
   test('Schould return 400 if an invalid email is provided', () => {
@@ -94,7 +109,7 @@ describe('SingUp Controller', () => {
         name: 'any_name',
         email: 'invalid_mail@mail.com',
         password: 'any_password',
-        passwordConfimation: 'any_password'
+        passwordConfirmation: 'any_password'
       }
     }
     const httpReponse = sut.handle(httpRequest)
@@ -112,7 +127,7 @@ describe('SingUp Controller', () => {
         name: 'any_name',
         email: 'any_mail@mail.com',
         password: 'any_password',
-        passwordConfimation: 'any_password'
+        passwordConfirmation: 'any_password'
       }
     }
     sut.handle(httpRequest)
@@ -129,7 +144,7 @@ describe('SingUp Controller', () => {
         name: 'any_name',
         email: 'any_mail@mail.com',
         password: 'any_password',
-        passwordConfimation: 'any_password'
+        passwordConfirmation: 'any_password'
       }
     }
     const httpReponse = sut.handle(httpRequest)
